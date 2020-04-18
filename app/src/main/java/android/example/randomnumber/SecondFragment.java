@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+
+import java.util.Random;
 
 public class SecondFragment extends Fragment {
 
@@ -22,6 +26,22 @@ public class SecondFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Receive the argument and add it to the Text view -> header
+        Integer count = SecondFragmentArgs.fromBundle(getArguments()).getMyArg();
+        String countText = getString(R.string.random_heading, count);
+        TextView headerView = view.getRootView().findViewById(R.id.textview_header);
+        headerView.setText(countText);
+
+        // Get a random number between the count number received in the args and 0
+        Random random = new java.util.Random();
+        Integer randomNumber = 0;
+        if (count > 0) {
+            randomNumber = random.nextInt(count + 1);
+        }
+
+        // Show the random number
+        TextView randomView = view.getRootView().findViewById(R.id.textView_random);
+        randomView.setText(randomNumber.toString());
 
         view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
             @Override
